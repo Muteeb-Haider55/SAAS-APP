@@ -58,13 +58,17 @@ interface SearchParams {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+//chatgpt
+// interface SearchParams {
+//   searchParams: { [key: string]: string | string[] | undefined };
+// }
+
 interface Avatar {
   userName: string;
   width: number;
   height: number;
   className?: string;
 }
-
 
 interface SavedMessage {
   role: "user" | "system" | "assistant";
