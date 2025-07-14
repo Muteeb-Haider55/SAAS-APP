@@ -8,7 +8,6 @@ const navItems = [
   { label: "Home", href: "/" },
   { label: "Companions", href: "/companions" },
   { label: "My Journey", href: "/my-journey" },
-  // { label: "Sign In", href: "/sign-in" },
 ];
 const NavItems = () => {
   const pathname = usePathname();
@@ -18,7 +17,6 @@ const NavItems = () => {
         <Link
           href={href}
           key={label}
-          // className={cn(pathname === href && "text-primary font-bold")}
           className={cn(
             pathname === href && "text-primary font-bold",
             "relative after:block after:h-[2px] after:bg-primary after:scale-x-0 after:transition-transform after:duration-300 after:origin-left hover:after:scale-x-100"
