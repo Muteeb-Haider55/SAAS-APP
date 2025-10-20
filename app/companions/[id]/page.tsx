@@ -7,11 +7,11 @@ import { redirect } from "next/navigation";
 import React from "react";
 
 interface CompanionSessionPageProps {
-  params: Promise<{ id: string }>;
+  params: { id: string };
 }
 
 const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
-  const { id } = await params;
+  const { id } = params;
   const companion = await getCompanion(id);
   const user = await currentUser();
   if (!companion) redirect("/companions");
@@ -44,7 +44,7 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
           </div>
         </div>
         <div className="item-start text-2xl max-md:hidden">
-          {duration} mintues
+          {duration} minutes
         </div>
       </article>
       <CompanionComponent

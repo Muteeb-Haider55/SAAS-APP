@@ -6,10 +6,10 @@ import { getSubjectColor } from "@/lib/utils";
 import React from "react";
 
 const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
-  const filters = await searchParams;
+  const filters = searchParams;
 
-  const subject = filters.subject ? filters.subject : "";
-  const topic = filters.topic ? filters.topic : "";
+  const subject = filters?.subject ? filters.subject : "";
+  const topic = filters?.topic ? filters.topic : "";
 
   const companions = await getAllCompanions({ subject, topic });
 

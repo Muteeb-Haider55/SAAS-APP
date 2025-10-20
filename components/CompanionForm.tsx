@@ -193,7 +193,7 @@ const CompanionForm = () => {
           name="duration"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Estimated Seession Duration in mintues</FormLabel>
+              <FormLabel>Estimated Session Duration in minutes</FormLabel>
               <FormControl>
                 <Input
                   type="number"

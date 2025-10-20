@@ -55,13 +55,8 @@ interface CreateUser {
 }
 
 interface SearchParams {
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+  searchParams: { [key: string]: string | string[] | undefined };
 }
-
-//chatgpt
-// interface SearchParams {
-//   searchParams: { [key: string]: string | string[] | undefined };
-// }
 
 interface Avatar {
   userName: string;
