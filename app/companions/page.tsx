@@ -6,12 +6,17 @@ import { getSubjectColor } from "@/lib/utils";
 import React from "react";
 
 const CompanionsLibrary = async ({ searchParams }: SearchParams) => {
-  const filters = searchParams;
+  const filters = await searchParams;
 
   const subject = filters?.subject ? filters.subject : "";
   const topic = filters?.topic ? filters.topic : "";
 
-  const companions = await getAllCompanions({ subject, topic });
+  let companions = [];
+  try {
+    companions = await getAllCompanions({ subject, topic });
+  } catch (error) {
+    console.error("Failed to load companions:", error);
+  }
 
   console.log(companions);
 

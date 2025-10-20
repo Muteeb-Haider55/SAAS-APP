@@ -10,19 +10,37 @@ import { getSubjectColor } from "@/lib/utils";
 import React from "react";
 
 const Page = async () => {
-  const companions = await getAllCompanions({ limit: 3 });
-  const recentSessionsCompanions = await getRecentSessions(10);
+  // Fetch data with error handling - don't let DB errors crash the page
+  let companions = [];
+  let recentSessionsCompanions = [];
+
+  try {
+    companions = await getAllCompanions({ limit: 3 });
+  } catch (error) {
+    console.error("Failed to fetch companions:", error);
+  }
+
+  try {
+    recentSessionsCompanions = await getRecentSessions(10);
+  } catch (error) {
+    console.error("Failed to fetch recent sessions:", error);
+  }
+
   return (
     <main>
       <h1 className="text-2xl underline">Popular Companions</h1>
       <section className="home-section">
-        {companions.map((companion) => (
-          <CompanionCard
-            key={companion.id}
-            {...companion}
-            color={getSubjectColor(companion.subject)}
-          />
-        ))}
+        {companions.length > 0 ? (
+          companions.map((companion) => (
+            <CompanionCard
+              key={companion.id}
+              {...companion}
+              color={getSubjectColor(companion.subject)}
+            />
+          ))
+        ) : (
+          <p className="text-muted-foreground">No companions available yet.</p>
+        )}
       </section>
 
       <section className="home-section">

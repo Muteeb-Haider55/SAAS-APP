@@ -124,27 +124,36 @@ export const getAllCompanions = async ({
   subject,
   topic,
 }: GetAllCompanions) => {
-  const supabase = await createSupabaseClient();
+  try {
+    const supabase = await createSupabaseClient();
 
-  let query = supabase.from("companions").select();
+    let query = supabase.from("companions").select();
 
-  if (subject && topic) {
-    query = query
-      .ilike("subject", `%${subject}%`)
-      .or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
-  } else if (subject) {
-    query = query.ilike("subject", `%${subject}%`);
-  } else if (topic) {
-    query = query.or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+    if (subject && topic) {
+      query = query
+        .ilike("subject", `%${subject}%`)
+        .or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+    } else if (subject) {
+      query = query.ilike("subject", `%${subject}%`);
+    } else if (topic) {
+      query = query.or(`topic.ilike.%${topic}%,name.ilike.%${topic}%`);
+    }
+
+    query = query.range((page - 1) * limit, page * limit - 1);
+
+    const { data: companions, error } = await query;
+
+    if (error) {
+      console.error("Supabase getAllCompanions error:", error);
+      return [];
+    }
+
+    return companions || [];
+  } catch (error: any) {
+    console.error("Failed to connect to Supabase:", error?.message || error);
+    // Return empty array instead of throwing to prevent page crash
+    return [];
   }
-
-  query = query.range((page - 1) * limit, page * limit - 1);
-
-  const { data: companions, error } = await query;
-
-  if (error) throw new Error(error.message);
-
-  return companions;
 };
 
 export const getCompanion = async (id: string) => {
@@ -181,9 +190,13 @@ export const getRecentSessions = async (limit = 10) => {
     .order("created_at", { ascending: false })
     .limit(limit);
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    console.error("Supabase getRecentSessions error:", error);
+    // Return empty array instead of throwing to prevent page crash
+    return [];
+  }
 
-  return data.map(({ companions }) => companions);
+  return data?.map(({ companions }: any) => companions).filter(Boolean) || [];
 };
 
 export const getUserSessions = async (userId: string, limit = 10) => {
