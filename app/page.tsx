@@ -1,7 +1,7 @@
 import CompanionCard from "@/components/CompanionCard";
 import CompanionsList from "@/components/CompanionsList";
 import CTA from "@/components/CTA";
-import { recentSessions } from "@/constants";
+import HeroSection from "@/components/HeroSection";
 import {
   getAllCompanions,
   getRecentSessions,
@@ -28,7 +28,9 @@ const Page = async () => {
 
   return (
     <main>
-      <h1 className="text-2xl underline">Popular Companions</h1>
+      <HeroSection companions={companions} />
+
+      <h2 className="text-2xl font-semibold tracking-tight">Popular Companions</h2>
       <section className="home-section">
         {companions.length > 0 ? (
           companions.map((companion) => (

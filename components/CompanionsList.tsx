@@ -22,7 +22,7 @@ const CompanionsList = ({
 }: CompanionListProps) => {
   return (
     <article className={cn("companion-list", classNames)}>
-      <h2 className="font-bold text-3xl">{title}</h2>
+      <h2 className="text-3xl font-semibold tracking-tight">{title}</h2>
       <Table>
         <TableHeader>
           <TableRow>
@@ -33,7 +33,7 @@ const CompanionsList = ({
         </TableHeader>
         <TableBody>
           {companions?.map(({ id, subject, name, topic, duration }) => (
-            <TableRow key={id}>
+            <TableRow key={id} className="group">
               <TableCell>
                 <Link href={`/companions/${id}`}>
                   <div className="flex items-center gap-2">
@@ -48,9 +48,11 @@ const CompanionsList = ({
                         height={35}
                       />
                     </div>
-                    <div className="flex flex-col gap-2">
-                      <p className=" font-bold text-xl">{name}</p>
-                      <p className="text-lg">{topic}</p>
+                    <div className="flex flex-col gap-1.5">
+                      <p className="text-xl font-semibold tracking-tight group-hover:text-primary transition-colors">
+                        {name}
+                      </p>
+                      <p className="text-base text-foreground/75 line-clamp-1">{topic}</p>
                     </div>
                   </div>
                 </Link>
@@ -73,7 +75,7 @@ const CompanionsList = ({
               </TableCell>
               <TableCell>
                 <div className="flex items-center gap-2 w-full justify-end">
-                  <p className="text-2xl">
+                  <p className="text-xl font-medium">
                     {duration}
                     <span className="max-md:hidden"> mins</span>
                   </p>

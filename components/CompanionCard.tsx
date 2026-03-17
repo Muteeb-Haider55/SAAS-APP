@@ -23,8 +23,8 @@ const CompanionCard = ({
       <div className="flex justify-between items-center ">
         <div className="subject-badge">{subject}</div>
       </div>
-      <h2 className="text-2xl font-bold ">{name}</h2>
-      <p className="text-sm">{topic}</p>
+      <h2 className="text-2xl font-semibold tracking-tight">{name}</h2>
+      <p className="text-sm text-foreground/80 line-clamp-2">{topic}</p>
       <div className="flex items-center gap-2">
         <Image
           src="/icons/clock.svg"
@@ -32,7 +32,7 @@ const CompanionCard = ({
           width={13.5}
           height={13.5}
         />
-        <p className="text-sm">{duration}</p>
+        <p className="text-sm">{duration} mins</p>
       </div>
       <Link href={`/companions/${id}`} className="w-full">
         <button className="btn-primary w-full justify-center">

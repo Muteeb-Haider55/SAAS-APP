@@ -6,8 +6,29 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 
-const HeroSection = () => {
-  const [activeSubject, setActiveSubject] = useState(subjects[0]);
+interface HeroCompanion {
+  id: string;
+  name: string;
+  subject: string;
+  topic: string;
+  duration: number;
+}
+
+interface HeroSectionProps {
+  companions?: HeroCompanion[];
+}
+
+const HeroSection = ({ companions = [] }: HeroSectionProps) => {
+  const [activeCompanionId, setActiveCompanionId] = useState(
+    companions[0]?.id ?? ""
+  );
+
+  const activeCompanion =
+    companions.find((companion) => companion.id === activeCompanionId) ||
+    companions[0] ||
+    null;
+
+  const activeSubject = activeCompanion?.subject || subjects[0];
 
   const preview = useMemo(() => {
     const color = getSubjectColor(activeSubject);
@@ -45,14 +66,29 @@ const HeroSection = () => {
       },
     };
 
+    if (activeCompanion) {
+      return {
+        color,
+        label: `${activeCompanion.subject} Companion`,
+        lesson: activeCompanion.name,
+        topic: activeCompanion.topic,
+        duration: `${activeCompanion.duration} min live lesson`,
+        href: `/companions/${activeCompanion.id}`,
+      };
+    }
+
     return {
       color,
       ...details[activeSubject],
+      topic: "Choose a subject and begin a personalized voice session.",
+      href: "/companions/new",
     };
-  }, [activeSubject]);
+  }, [activeSubject, activeCompanion]);
 
   return (
     <section className="hero-section">
+      <div className="hero-ambient" aria-hidden="true" />
+
       <div className="hero-copy">
         <p className="hero-kicker">AI Voice Learning Platform</p>
         <h1 className="hero-title">Learn faster with your personal AI companion</h1>
@@ -71,21 +107,43 @@ const HeroSection = () => {
           </Link>
         </div>
 
-        <div className="hero-chips">
-          {subjects.map((subject) => (
-            <button
-              key={subject}
-              type="button"
-              onMouseEnter={() => setActiveSubject(subject)}
-              onFocus={() => setActiveSubject(subject)}
-              onClick={() => setActiveSubject(subject)}
-              className={`hero-chip ${
-                activeSubject === subject ? "hero-chip-active" : ""
-              }`}
-            >
-              {subject}
-            </button>
-          ))}
+        {companions.length > 0 ? (
+          <div className="hero-chips">
+            {companions.map((companion) => (
+              <button
+                key={companion.id}
+                type="button"
+                onMouseEnter={() => setActiveCompanionId(companion.id)}
+                onFocus={() => setActiveCompanionId(companion.id)}
+                onClick={() => setActiveCompanionId(companion.id)}
+                className={`hero-chip ${
+                  activeCompanion?.id === companion.id ? "hero-chip-active" : ""
+                }`}
+              >
+                {companion.name}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="hero-chips">
+            {subjects.map((subject) => (
+              <button
+                key={subject}
+                type="button"
+                className={`hero-chip ${
+                  activeSubject === subject ? "hero-chip-active" : ""
+                }`}
+              >
+                {subject}
+              </button>
+            ))}
+          </div>
+        )}
+
+        <div className="hero-metrics">
+          <div className="hero-metric-pill">Real-time voice</div>
+          <div className="hero-metric-pill">Adaptive sessions</div>
+          <div className="hero-metric-pill">Multi-subject support</div>
         </div>
       </div>
 
@@ -102,12 +160,18 @@ const HeroSection = () => {
         <div className="space-y-2">
           <p className="hero-preview-label">{preview.label}</p>
           <h3 className="hero-preview-lesson">{preview.lesson}</h3>
+          <p className="hero-preview-duration line-clamp-2">{preview.topic}</p>
           <p className="hero-preview-duration">{preview.duration}</p>
         </div>
 
-        <div className="hero-preview-footer">
-          <span className="hero-dot" />
-          Live voice session ready
+        <div className="flex items-center justify-between gap-3 max-sm:flex-col max-sm:items-start">
+          <div className="hero-preview-footer">
+            <span className="hero-dot" />
+            Live voice session ready
+          </div>
+          <Link href={preview.href} className="btn-primary hero-preview-action">
+            Launch Companion
+          </Link>
         </div>
       </article>
     </section>
