@@ -160,7 +160,7 @@ body {
 
 @layer components {
   .hero-section {
-    @apply relative grid grid-cols-2 items-start gap-6 overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-sm max-lg:grid-cols-1;
+    @apply relative grid grid-cols-2 items-start gap-6 overflow-hidden rounded-3xl border border-border bg-card px-6 py-2 shadow-sm max-lg:grid-cols-1 max-sm:px-4;
   }
   .hero-ambient {
     @apply pointer-events-none absolute -right-20 -top-20 size-72 rounded-full bg-primary/20 blur-3xl;
@@ -259,10 +259,10 @@ body {
     @apply flex cursor-pointer items-center gap-2 rounded-xl bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground shadow-sm transition-all hover:bg-primary/90 hover:shadow-md active:scale-[0.99];
   }
   .navbar {
-    @apply sticky top-0 z-40 mx-auto flex w-full items-center justify-between border-b border-border/70 bg-background/95 px-10 py-4 backdrop-blur max-sm:px-4;
+    @apply sticky top-0 z-40 mx-auto flex w-full flex-nowrap items-center justify-between border-b border-border/70 bg-background/95 px-10 py-4 backdrop-blur max-sm:px-4;
   }
   .btn-signin {
-    @apply flex cursor-pointer items-center gap-2 rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-semibold text-foreground/90 transition-colors hover:border-primary/30 hover:bg-primary/8;
+    @apply flex shrink-0 cursor-pointer items-center gap-2 whitespace-nowrap rounded-xl border border-border bg-background px-4 py-2.5 text-sm font-semibold text-foreground/90 transition-colors hover:border-primary/30 hover:bg-primary/8 max-sm:px-3 max-sm:py-2 max-sm:text-xs;
   }
   .companion-list {
     @apply rounded-3xl border border-border bg-card px-7 pt-7 pb-10 shadow-sm max-lg:w-full;
