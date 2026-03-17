@@ -169,7 +169,7 @@ const HeroSection = ({ companions = [] }: HeroSectionProps) => {
             <span className="hero-dot" />
             Live voice session ready
           </div>
-          <Link href={preview.href} className="btn-primary hero-preview-action">
+          <Link href={preview.href} className="hero-preview-action">
             Launch Companion
           </Link>
         </div>
